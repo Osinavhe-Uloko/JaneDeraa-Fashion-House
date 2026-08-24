@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-divider;
+  }
+  html {
+    @apply bg-bg;
+  }
+  body {
+    @apply bg-bg text-ink font-sans text-[15px] leading-[1.6];
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-normal;
+  }
+  a {
+    @apply text-inherit no-underline;
+  }
+  ::selection {
+    @apply bg-gold/20;
+  }
+}
+
+@layer components {
+  .label-caption {
+    @apply text-[11px] uppercase tracking-label text-ink-600;
+  }
+
+  .container-px {
+    @apply px-5 md:px-12 lg:px-20;
+  }
+}
