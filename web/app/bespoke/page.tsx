@@ -51,16 +51,7 @@ const TAILORS = [
 export default function BespokePage() {
   return (
     <PageShell>
-      <div className="relative h-[70vh] min-h-[480px] max-h-[760px]">
-        <Image
-          src="https://picsum.photos/seed/jd-bespoke-hero/1600/1000"
-          alt="The atelier, wide, low light"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-green-overlay/45" />
+      <div className="relative h-[70vh] min-h-[480px] max-h-[760px] bg-green">
         <div className="relative z-10 h-full flex flex-col items-center justify-center gap-7 md:gap-9 text-center text-bg px-6">
           <div className="text-[10px] md:text-[11px] uppercase tracking-label-2xl text-gold-300">Bespoke</div>
           <h1 className="font-display text-hero-mobile md:text-[80px] md:leading-[1.04] max-w-3xl">

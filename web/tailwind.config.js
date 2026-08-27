@@ -35,9 +35,6 @@ module.exports = {
           DEFAULT: '#1D4429',
           light: '#16351F',
           dark: '#102A18',
-          // Near-black overlay tint used over hero photography (design source:
-          // rgba(11,26,15,*)) — greener than a neutral ink scrim.
-          overlay: '#0B1A0F',
         },
         divider: 'rgba(17, 17, 16, 0.14)',
         'divider-dark': 'rgba(245, 244, 241, 0.35)',
