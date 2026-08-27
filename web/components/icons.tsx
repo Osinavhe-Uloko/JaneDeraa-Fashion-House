@@ -1,4 +1,5 @@
-// Thin-line icon set (1.5px stroke) — bag, heart, search, account, menu, close, chevron.
+// Thin-line icon set (1.5px stroke) — bag, heart, search, account, menu, close,
+// chevron, chat, WhatsApp, Instagram, mail, phone.
 type IconProps = { className?: string };
 
 const base = {
@@ -65,6 +66,51 @@ export function ChevronIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className}>
       <path d="m9 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+export function ChatIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M4 5.5h16v11H9l-4 3.5v-3.5H4v-11Z" />
+      <path d="M8 10h8M8 13.5h5" />
+    </svg>
+  );
+}
+
+export function WhatsAppIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M4 20l1.3-3.9A7.9 7.9 0 1 1 8.6 19L4 20Z" />
+      <path d="M9 9.8c0 3 2.2 5.2 5.2 5.2.5 0 1-.5.9-1l-.2-.9a.7.7 0 0 0-.7-.5l-1.3.2c-.9-.5-1.7-1.3-2.2-2.2l.2-1.3a.7.7 0 0 0-.5-.7l-.9-.2c-.5-.1-1 .4-1 .9v.5Z" />
+    </svg>
+  );
+}
+
+export function InstagramIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="4" y="4" width="16" height="16" rx="4.5" />
+      <circle cx="12" cy="12" r="3.6" />
+      <circle cx="16.6" cy="7.4" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function MailIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+      <path d="m4.5 7 7.5 6 7.5-6" />
+    </svg>
+  );
+}
+
+export function PhoneIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M6 3.5c.6 1.6 1.1 2.9 1.9 4.2a1 1 0 0 1-.2 1.3L6.2 10.6a11.3 11.3 0 0 0 5.2 5.2l1.6-1.5a1 1 0 0 1 1.3-.2c1.3.8 2.6 1.3 4.2 1.9.6.2 1 .8.9 1.5l-.4 2a1.4 1.4 0 0 1-1.5 1.1C9.9 20 4 14.1 3.5 6.4A1.4 1.4 0 0 1 4.6 4.9l2-.4c.7-.1 1.3.3 1.4.9Z" />
     </svg>
   );
 }

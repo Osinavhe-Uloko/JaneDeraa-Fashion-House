@@ -5,6 +5,7 @@ import { CartProvider } from '@/lib/cart-context';
 import { WishlistProvider } from '@/lib/wishlist-context';
 import { AuthProvider } from '@/lib/auth-context';
 import CartDrawer from '@/components/CartDrawer';
+import ContactBot from '@/components/ContactBot';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <WishlistProvider>
               {children}
               <CartDrawer />
+              <ContactBot />
             </WishlistProvider>
           </CartProvider>
         </AuthProvider>
