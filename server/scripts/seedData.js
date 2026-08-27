@@ -463,6 +463,30 @@ const PRODUCTS = [
     tags: ['Bespoke', 'Limited'],
     imageCount: 2,
   }),
+  product({
+    slug: 'beaded-lace-bridal-gown',
+    name: 'Beaded Lace Bridal Gown',
+    category: 'bespoke',
+    gender: 'women',
+    tier: 'bespoke',
+    price: 7200,
+    short: 'A hand-beaded mermaid gown with a high lace neckline and a detachable satin train.',
+    description:
+      'A fitted mermaid silhouette in hand-beaded lace, with a high illusion-lace neck and long sleeves. A detachable satin overskirt extends the train for the ceremony and lifts away for the reception. Pattern, beading and fit are cut for you alone across three fittings.',
+    fabric: 'Hand-beaded lace, silk-satin overskirt.',
+    care: 'Professional bridal preservation cleaning only. Alterations for the life of the garment are included.',
+    sizes: MADE_TO_MEASURE,
+    colors: [{ name: 'Ivory', hex: '#F5F1E8' }],
+    tags: ['Bespoke'],
+    featured: true,
+    images: [
+      'product-photos/beaded-lace-bridal-gown-1.jpg',
+      'product-photos/beaded-lace-bridal-gown-2.jpg',
+      'product-photos/beaded-lace-bridal-gown-3.jpg',
+      'product-photos/beaded-lace-bridal-gown-4.jpg',
+      'product-photos/beaded-lace-bridal-gown-5.jpg',
+    ],
+  }),
 ];
 
 const STORES = [
