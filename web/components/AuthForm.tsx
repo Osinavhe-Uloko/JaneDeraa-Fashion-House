@@ -50,7 +50,7 @@ export default function AuthForm({ mode }: { mode: 'signin' | 'register' }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-0px)]">
       <div className="relative hidden md:block">
-        <Image src="https://picsum.photos/seed/jd-auth-editorial/1000/1200" alt="" fill sizes="50vw" className="object-cover" />
+        <Image src="/assets/auth-editorial.png" alt="" fill sizes="50vw" className="object-cover" />
       </div>
       <div className="flex flex-col items-center justify-center gap-9 px-6 py-16 md:px-24">
         <Link href="/" className="self-start md:self-center">
