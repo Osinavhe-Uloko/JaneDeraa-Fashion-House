@@ -1,11 +1,18 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import './globals.css';
 import { CartProvider } from '@/lib/cart-context';
 import { WishlistProvider } from '@/lib/wishlist-context';
 import { AuthProvider } from '@/lib/auth-context';
 import CartDrawer from '@/components/CartDrawer';
 import ContactBot from '@/components/ContactBot';
+
+// We import the CSS above ourselves, so stop react-fontawesome from also
+// injecting it at runtime (the double-inject is what causes the classic
+// "icons render huge for a flash" hydration glitch).
+config.autoAddCss = false;
 
 const montserrat = Montserrat({
   subsets: ['latin'],
