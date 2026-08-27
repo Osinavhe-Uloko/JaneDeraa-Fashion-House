@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 
+const fs = require('fs');
+const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 const { CATEGORIES, PRODUCTS, STORES, JOURNAL_ARTICLES } = require('./seedData');
 
@@ -29,18 +31,26 @@ async function ensureBucket() {
   }
 }
 
-async function uploadImage(url, path) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to download ${url}: ${res.status}`);
-  const buffer = Buffer.from(await res.arrayBuffer());
+// `source` is either an http(s) URL (picsum placeholders) or a local file
+// path, relative to this scripts/ directory (real product photography —
+// see scripts/product-photos/).
+async function uploadImage(source, storagePath) {
+  let buffer;
+  if (/^https?:\/\//.test(source)) {
+    const res = await fetch(source);
+    if (!res.ok) throw new Error(`Failed to download ${source}: ${res.status}`);
+    buffer = Buffer.from(await res.arrayBuffer());
+  } else {
+    buffer = fs.readFileSync(path.join(__dirname, source));
+  }
 
-  const { error } = await supabase.storage.from(BUCKET).upload(path, buffer, {
+  const { error } = await supabase.storage.from(BUCKET).upload(storagePath, buffer, {
     contentType: 'image/jpeg',
     upsert: true,
   });
   if (error) throw error;
 
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(storagePath);
   return data.publicUrl;
 }
 

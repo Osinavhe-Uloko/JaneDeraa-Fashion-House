@@ -58,6 +58,7 @@ function product({
   tags = [],
   featured = false,
   imageCount = 3,
+  images, // optional: explicit list of http(s) URLs or local paths (see uploadImage in seed.js), overrides the picsum auto-generation
 }) {
   return {
     slug,
@@ -76,7 +77,8 @@ function product({
     tags,
     is_featured: featured,
     in_stock: true,
-    sourceImages: Array.from({ length: imageCount }, (_, i) => picsum(`jd-${slug}-${i}`, 900, i === 0 ? 1125 : 1000)),
+    sourceImages:
+      images || Array.from({ length: imageCount }, (_, i) => picsum(`jd-${slug}-${i}`, 900, i === 0 ? 1125 : 1000)),
   };
 }
 
@@ -310,6 +312,48 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: COLOR_SETS.neutral,
     tags: ['New'],
+  }),
+  product({
+    slug: 'printed-camp-shirt',
+    name: 'Printed Camp Shirt',
+    category: 'men-shirting',
+    gender: 'men',
+    tier: 'ready-to-wear',
+    price: 240,
+    short: 'A camp-collar shirt in a bold print, cut from mid-weight cotton twill.',
+    description:
+      'A notch camp collar and a straight, boxy body cut from a mid-weight cotton twill. Worn open over a plain tee or buttoned to the top — the print does the rest.',
+    fabric: '100% cotton twill.',
+    care: 'Machine wash cold. Warm iron.',
+    sizes: RTW_SIZES,
+    colors: [
+      { name: 'Camo Print', hex: '#5C6E52' },
+      { name: 'Paisley Print', hex: '#4A4A47' },
+    ],
+    tags: ['New'],
+    featured: true,
+    images: [
+      'product-photos/printed-camp-shirt-camo.jpg',
+      'product-photos/printed-camp-shirt-paisley.jpg',
+      'product-photos/printed-camp-shirt-group.jpg',
+    ],
+  }),
+  product({
+    slug: 'textured-knit-polo',
+    name: 'Textured Knit Polo',
+    category: 'men-knitwear',
+    gender: 'men',
+    tier: 'ready-to-wear',
+    price: 195,
+    short: 'A slub-textured polo with a contrast collar and cuffs.',
+    description:
+      'Knitted from a slub cotton-blend yarn for a heathered, textured surface, finished with a contrast collar and rib cuffs. Cut for a relaxed, slightly boxy fit.',
+    fabric: 'Cotton-blend slub knit.',
+    care: 'Machine wash cold. Do not tumble dry.',
+    sizes: RTW_SIZES,
+    colors: [{ name: 'Rust', hex: '#A85C4A' }],
+    tags: [],
+    images: ['product-photos/textured-knit-polo-1.jpg'],
   }),
 
   // ---- Custom-Made ----
