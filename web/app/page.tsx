@@ -29,7 +29,7 @@ export default async function HomePage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-900/50 via-ink-900/15 to-ink-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-green-overlay/50 via-green-overlay/15 to-green-overlay/40" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center gap-7 md:gap-8 text-center text-bg px-6">
           <div className="text-[10px] md:text-[11px] uppercase tracking-label-2xl text-gold-300">Autumn Collection</div>
           <h1 className="font-display text-hero-mobile md:text-hero-tablet lg:text-hero-desktop max-w-4xl">
