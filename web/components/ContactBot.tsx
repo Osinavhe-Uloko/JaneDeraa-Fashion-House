@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import { ChatIcon, CloseIcon, WhatsAppIcon, InstagramIcon, MailIcon, PhoneIcon } from './icons';
 
-// Placeholder brand contact details — swap for the real handles/number when available.
-const WHATSAPP_NUMBER = '12125550148'; // digits only, country code first, no leading +
+const WHATSAPP_NUMBER = '2348147491992'; // digits only, country code first, no leading +
 const INSTAGRAM_HANDLE = 'janederaa';
-const EMAIL = 'hello@janederaa.com';
-const PHONE_DISPLAY = '+1 212 555 0148';
-const PHONE_TEL = '+12125550148';
+const EMAIL = 'hello@janederaa.com'; // placeholder — swap once a real address is confirmed
+const PHONE_DISPLAY = '+234 814 749 1992';
+const PHONE_TEL = '+2348147491992';
 
 const DEFAULT_WHATSAPP_MESSAGE = "Hello JaneDeraa, I'd like to ask about ";
 

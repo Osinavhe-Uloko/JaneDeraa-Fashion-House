@@ -7,8 +7,8 @@ import Accordion from './Accordion';
 
 const CHANNELS = [
   { k: 'Email', v: 'hello@janederaa.com' },
-  { k: 'Telephone', v: '+1 212 555 0148' },
-  { k: 'WhatsApp', v: '+1 212 555 0148' },
+  { k: 'Telephone', v: '+234 814 749 1992' },
+  { k: 'WhatsApp', v: '+234 814 749 1992' },
 ];
 
 const FAQS = [
