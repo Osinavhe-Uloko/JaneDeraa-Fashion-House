@@ -17,9 +17,9 @@ const MILESTONES = [
 ];
 
 const TAILORS = [
-  { name: 'Elena Marchetti', role: 'Head Cutter', seed: 'jd-tailor-1' },
-  { name: 'Thomas Ridley', role: 'Coatmaker', seed: 'jd-tailor-2' },
-  { name: 'Sofia Adeyemi', role: 'Trouser Tailor', seed: 'jd-tailor-3' },
+  { name: 'Elena Marchetti', role: 'Head Cutter', image: '/assets/placeholders/tailor-1.jpg' },
+  { name: 'Thomas Ridley', role: 'Coatmaker', image: '/assets/placeholders/tailor-2.jpg' },
+  { name: 'Sofia Adeyemi', role: 'Trouser Tailor', image: '/assets/placeholders/tailor-3.jpg' },
 ];
 
 export default function AboutPage() {
@@ -42,7 +42,7 @@ export default function AboutPage() {
 
       <section className="container-px pb-20 md:pb-32">
         <div className="relative aspect-[16/9] md:aspect-[21/9] border border-divider overflow-hidden">
-          <Image src="https://picsum.photos/seed/jd-about-atelier/1600/700" alt="The atelier, wide" fill sizes="100vw" className="object-cover" />
+          <Image src="/assets/placeholders/about-atelier.jpg" alt="The atelier, wide" fill sizes="100vw" className="object-cover" />
         </div>
       </section>
 
@@ -73,7 +73,7 @@ export default function AboutPage() {
         {TAILORS.map((t) => (
           <div key={t.name} className="flex flex-col gap-3.5">
             <div className="relative aspect-[4/5] border border-divider overflow-hidden">
-              <Image src={`https://picsum.photos/seed/${t.seed}/700/875`} alt={t.name} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              <Image src={t.image} alt={t.name} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
             <div className="font-display text-xl">{t.name}</div>
             <div className="text-[11px] uppercase tracking-label text-gold-700">{t.role}</div>

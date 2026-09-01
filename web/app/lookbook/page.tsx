@@ -11,13 +11,13 @@ const LOOKS = [
     n: '01',
     title: 'Look 01 — Wool flannel',
     body: 'A wool flannel overcoat over tailored wool trouser, photographed at the atelier in early light. Cut for cold mornings, not for the camera.',
-    seed: 'jd-look-01',
+    image: '/assets/placeholders/look-01.jpg',
   },
   {
     n: '02',
     title: 'Look 02 — Raw silk',
     body: 'Raw silk against bare skin, a single fastening at the waist. Shot on location in a borrowed apartment, nothing else in the frame.',
-    seed: 'jd-look-02',
+    image: '/assets/placeholders/look-02.jpg',
   },
 ];
 
@@ -37,7 +37,7 @@ export default async function LookbookPage() {
         return (
           <section key={look.n} className="container-px pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 items-center">
             <div className={`relative aspect-[4/5] border border-divider overflow-hidden ${imageFirst ? 'md:order-1' : 'md:order-2'}`}>
-              <Image src={`https://picsum.photos/seed/${look.seed}/900/1125`} alt={look.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+              <Image src={look.image} alt={look.title} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               {product && (
                 <Link
                   href={`/product/${product.slug}`}

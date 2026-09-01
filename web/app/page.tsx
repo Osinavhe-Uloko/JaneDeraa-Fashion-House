@@ -8,9 +8,9 @@ import { api } from '@/lib/api';
 import { safe } from '@/lib/safe';
 
 const CATEGORY_TILES = [
-  { label: 'Women', href: '/shop?gender=women', cta: 'Shop', image: 'https://picsum.photos/seed/jd-cat-women/900/1125' },
-  { label: 'Men', href: '/shop?gender=men', cta: 'Shop', image: 'https://picsum.photos/seed/jd-cat-men/900/1125' },
-  { label: 'Custom & Bespoke', href: '/custom-made', cta: 'Explore', image: 'https://picsum.photos/seed/jd-cat-atelier/900/1125' },
+  { label: 'Women', href: '/shop?gender=women', cta: 'Shop', image: '/assets/placeholders/cat-women.jpg' },
+  { label: 'Men', href: '/shop?gender=men', cta: 'Shop', image: '/assets/placeholders/cat-men.jpg' },
+  { label: 'Custom & Bespoke', href: '/custom-made', cta: 'Explore', image: '/assets/placeholders/cat-atelier.jpg' },
 ];
 
 const PRESS = ['The Standard', 'Cloth & Craft', 'Wardrobe Weekly', 'The Tailoring Review', 'Atelier Journal'];
@@ -79,7 +79,7 @@ export default async function HomePage() {
 
       <section className="bg-surface container-px py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
         <div className="relative aspect-[4/5] border border-divider overflow-hidden order-2 md:order-1">
-          <Image src="https://picsum.photos/seed/jd-atelier-hands/900/1125" alt="Hands at work in the atelier" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+          <Image src="/assets/placeholders/atelier-hands.jpg" alt="Hands at work in the atelier" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
         </div>
         <div className="flex flex-col gap-7 order-1 md:order-2">
           <div className="text-[11px] uppercase tracking-label-xl text-gold-700">The Atelier</div>
@@ -100,13 +100,13 @@ export default async function HomePage() {
       <section className="container-px py-24 md:py-32 grid grid-cols-1 md:grid-cols-9 gap-6 items-end">
         <div className="md:col-span-5 flex flex-col gap-4">
           <div className="relative aspect-[16/11] border border-divider overflow-hidden">
-            <Image src="https://picsum.photos/seed/jd-lookbook-interior/1200/825" alt="Lookbook, interior setting" fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />
+            <Image src="/assets/placeholders/lookbook-interior.jpg" alt="Lookbook, interior setting" fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />
           </div>
           <div className="text-[11px] uppercase tracking-label text-ink-600">Lookbook — Autumn</div>
         </div>
         <div className="md:col-span-4 flex flex-col gap-6 md:pb-14">
           <div className="relative aspect-[4/5] border border-divider overflow-hidden">
-            <Image src="https://picsum.photos/seed/jd-lookbook-detail/900/1125" alt="Detail shot" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
+            <Image src="/assets/placeholders/lookbook-detail.jpg" alt="Detail shot" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
           </div>
           <div className="font-display text-2xl leading-snug">See the collection in full</div>
           <Link href="/lookbook" className="text-[11px] uppercase tracking-label text-gold-700 hover:text-ink transition-colors">

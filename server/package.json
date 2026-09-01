@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "fetch-web-images": "node scripts/fetch-web-images.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

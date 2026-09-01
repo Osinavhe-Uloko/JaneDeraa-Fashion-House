@@ -30,7 +30,7 @@ export default function PdpClient({
   const { has, toggle } = useWishlist();
 
   const color = product.colors[colorIndex]?.name || '';
-  const images = product.images.length ? product.images : ['https://picsum.photos/seed/jd-placeholder/900/1125'];
+  const images = product.images.length ? product.images : ['/assets/placeholders/no-image.jpg'];
 
   function handleAddToBag() {
     addItem({

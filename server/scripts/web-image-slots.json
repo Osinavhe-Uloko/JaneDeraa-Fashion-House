@@ -1,0 +1,97 @@
+{
+  "cat-women": {
+    "query": "women fashion editorial",
+    "w": 900,
+    "h": 1125
+  },
+  "cat-men": {
+    "query": "men fashion editorial",
+    "w": 900,
+    "h": 1125
+  },
+  "cat-atelier": {
+    "query": "tailoring atelier custom suit",
+    "w": 900,
+    "h": 1125
+  },
+  "atelier-hands": {
+    "query": "tailor hands sewing",
+    "w": 900,
+    "h": 1125
+  },
+  "lookbook-interior": {
+    "query": "fashion lookbook interior photography",
+    "w": 1200,
+    "h": 825
+  },
+  "lookbook-detail": {
+    "query": "fashion detail shot garment",
+    "w": 900,
+    "h": 1125
+  },
+  "look-01": {
+    "query": "wool flannel coat fashion",
+    "w": 900,
+    "h": 1125
+  },
+  "look-02": {
+    "query": "silk dress fashion editorial",
+    "w": 900,
+    "h": 1125
+  },
+  "custom-hero": {
+    "query": "fabric swatches tailoring pattern",
+    "w": 1000,
+    "h": 800
+  },
+  "journey-consult": {
+    "query": "tailor consultation fitting",
+    "w": 800,
+    "h": 600
+  },
+  "journey-measure": {
+    "query": "tailor measuring tape suit",
+    "w": 800,
+    "h": 600
+  },
+  "journey-fabric": {
+    "query": "fabric bolts tailoring cloth",
+    "w": 800,
+    "h": 600
+  },
+  "journey-fitting": {
+    "query": "suit fitting mirror tailor",
+    "w": 800,
+    "h": 600
+  },
+  "journey-delivery": {
+    "query": "boxed garment delivery boutique",
+    "w": 800,
+    "h": 600
+  },
+  "tailor-1": {
+    "query": "female tailor portrait",
+    "w": 700,
+    "h": 875
+  },
+  "tailor-2": {
+    "query": "male tailor portrait craftsman",
+    "w": 700,
+    "h": 875
+  },
+  "tailor-3": {
+    "query": "seamstress portrait atelier",
+    "w": 700,
+    "h": 875
+  },
+  "about-atelier": {
+    "query": "tailoring atelier wide interior",
+    "w": 1600,
+    "h": 700
+  },
+  "no-image": {
+    "query": "fashion garment on hanger",
+    "w": 900,
+    "h": 1125
+  }
+}

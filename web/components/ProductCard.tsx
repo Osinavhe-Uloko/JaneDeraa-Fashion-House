@@ -44,7 +44,7 @@ export default function ProductCard({
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
-            className="absolute inset-0 object-cover transition-opacity duration-300 group-hover:opacity-0"
+            className={`absolute inset-0 object-cover transition-opacity duration-300 ${secondary ? 'group-hover:opacity-0' : ''}`}
           />
         )}
         {product.tags[0] && (

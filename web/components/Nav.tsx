@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from '@/lib/cart-context';
+import { api } from '@/lib/api';
 import { BagIcon, CloseIcon, MenuIcon, SearchIcon, UserIcon } from './icons';
 
 const PRIMARY_LINKS = [
@@ -27,6 +28,7 @@ export default function Nav({ variant = 'solid' }: { variant?: 'solid' | 'overla
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [resultCount, setResultCount] = useState<number | null>(null);
   const { count, open: openCart } = useCart();
   const router = useRouter();
 
@@ -36,10 +38,40 @@ export default function Nav({ variant = 'solid' }: { variant?: 'solid' | 'overla
     ? 'absolute top-0 inset-x-0 z-30 text-bg'
     : 'sticky top-0 z-30 bg-bg text-ink border-b border-divider';
 
-  function submitSearch(e: React.FormEvent) {
-    e.preventDefault();
+  useEffect(() => {
+    const term = searchTerm.trim();
+    if (!searchOpen || !term) {
+      setResultCount(null);
+      return;
+    }
+    const timer = setTimeout(() => {
+      api
+        .getProducts({ q: term, pageSize: 1 })
+        .then((res) => setResultCount(res.count))
+        .catch(() => setResultCount(null));
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm, searchOpen]);
+
+  function doSearch() {
     router.push(`/shop?q=${encodeURIComponent(searchTerm)}`);
     setSearchOpen(false);
+  }
+
+  function submitSearch(e: React.FormEvent) {
+    e.preventDefault();
+    doSearch();
+  }
+
+  function closeSearch() {
+    setSearchOpen(false);
+    setSearchTerm('');
+    setResultCount(null);
+  }
+
+  function suggestGender(href: string) {
+    router.push(href);
+    closeSearch();
   }
 
   return (
@@ -91,7 +123,7 @@ export default function Nav({ variant = 'solid' }: { variant?: 'solid' | 'overla
 
         {searchOpen && (
           <div className="border-t border-divider bg-bg text-ink">
-            <form onSubmit={submitSearch} className="container-px flex items-center gap-4 py-4">
+            <form onSubmit={submitSearch} className="container-px flex items-center gap-4 pt-4">
               <SearchIcon className="h-4 w-4 text-ink-600 flex-shrink-0" />
               <input
                 autoFocus
@@ -100,10 +132,47 @@ export default function Nav({ variant = 'solid' }: { variant?: 'solid' | 'overla
                 placeholder="Search"
                 className="flex-1 bg-transparent outline-none font-display text-xl md:text-2xl"
               />
-              <button type="button" onClick={() => setSearchOpen(false)} className="text-[11px] uppercase tracking-label text-ink-600 hover:text-gold-700">
+              <button type="button" onClick={closeSearch} className="text-[11px] uppercase tracking-label text-ink-600 hover:text-gold-700">
                 Close
               </button>
             </form>
+
+            <div className="container-px pb-4 pt-2">
+              {resultCount !== null && (
+                <div className="text-[11px] uppercase tracking-label text-ink-600 tabular-nums">{resultCount} results</div>
+              )}
+
+              {resultCount === 0 && (
+                <div className="flex flex-col items-center gap-4 py-10 text-center">
+                  <div className="font-display text-xl md:text-2xl">Nothing matched that</div>
+                  <p className="text-sm text-ink-700 font-light max-w-sm">
+                    Try a shorter term, or browse a category below.
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {PRIMARY_LINKS.map((link) => (
+                      <button
+                        key={link.label}
+                        type="button"
+                        onClick={() => suggestGender(link.href)}
+                        className="border border-divider hover:border-gold hover:text-gold-700 transition-colors px-5 py-2 text-[11px] uppercase tracking-label text-ink-700"
+                      >
+                        {link.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {resultCount !== null && resultCount > 0 && (
+                <button
+                  type="button"
+                  onClick={doSearch}
+                  className="mt-3 text-[11px] uppercase tracking-label text-gold-700 hover:text-ink transition-colors"
+                >
+                  View all results &rarr;
+                </button>
+              )}
+            </div>
           </div>
         )}
       </header>
@@ -129,7 +198,7 @@ export default function Nav({ variant = 'solid' }: { variant?: 'solid' | 'overla
           ))}
           <div className="mt-auto flex flex-col gap-3.5 text-[12px] uppercase tracking-label text-ink-700">
             <Link href="/account" onClick={() => setDrawerOpen(false)}>Account</Link>
-            <Link href="/account?tab=Wishlist" onClick={() => setDrawerOpen(false)}>Wishlist</Link>
+            <Link href="/wishlist" onClick={() => setDrawerOpen(false)}>Wishlist</Link>
             <Link href="/stores" onClick={() => setDrawerOpen(false)}>Book an appointment</Link>
           </div>
         </div>

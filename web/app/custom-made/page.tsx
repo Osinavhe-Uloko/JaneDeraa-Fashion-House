@@ -42,7 +42,7 @@ export default function CustomMadePage() {
           </Button>
         </div>
         <div className="relative aspect-[4/5] md:aspect-[4/3] border border-divider overflow-hidden order-first md:order-last">
-          <Image src="https://picsum.photos/seed/jd-custom-hero/1000/800" alt="Cloth and pattern on a table" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" priority />
+          <Image src="/assets/placeholders/custom-hero.jpg" alt="Cloth and pattern on a table" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" priority />
         </div>
       </section>
 

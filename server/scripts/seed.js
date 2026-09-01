@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 const { CATEGORIES, PRODUCTS, STORES, JOURNAL_ARTICLES } = require('./seedData');
+const { searchUnsplash, resolveImage, UNSPLASH_ACCESS_KEY } = require('./lib/images');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -31,9 +32,10 @@ async function ensureBucket() {
   }
 }
 
-// `source` is either an http(s) URL (picsum placeholders) or a local file
-// path, relative to this scripts/ directory (real product photography —
-// see scripts/product-photos/).
+// `source` is either an http(s) URL or a local file path, relative to this
+// scripts/ directory (real product photography — see scripts/product-photos/).
+// Generated placeholder images are `data:` URIs and never reach this
+// function — they're stored directly, skipping the upload (see seedProducts).
 async function uploadImage(source, storagePath) {
   let buffer;
   if (/^https?:\/\//.test(source)) {
@@ -68,16 +70,35 @@ async function seedCategories() {
 }
 
 async function seedProducts(categoryIdBySlug) {
-  console.log(`Seeding ${PRODUCTS.length} products (downloading + uploading placeholder images)...`);
+  console.log(
+    UNSPLASH_ACCESS_KEY
+      ? `Seeding ${PRODUCTS.length} products (fetching photos from Unsplash where none are checked in)...`
+      : `Seeding ${PRODUCTS.length} products (no UNSPLASH_ACCESS_KEY set — using placeholder swatches; see .env.example)...`
+  );
 
   for (const p of PRODUCTS) {
     process.stdout.write(`  ${p.slug} `);
 
     const images = [];
-    for (let i = 0; i < p.sourceImages.length; i++) {
-      const publicUrl = await uploadImage(p.sourceImages[i], `products/${p.slug}/${i}.jpg`);
-      images.push(publicUrl);
-      process.stdout.write('.');
+    if (Array.isArray(p.sourceImages)) {
+      // Explicit override — real photography or a direct URL.
+      for (let i = 0; i < p.sourceImages.length; i++) {
+        const publicUrl = await uploadImage(p.sourceImages[i], `products/${p.slug}/${i}.jpg`);
+        images.push(publicUrl);
+        process.stdout.write('.');
+      }
+    } else {
+      // Search marker — one Unsplash search per product, reused across slots.
+      const { search, count, seed } = p.sourceImages;
+      const results = await searchUnsplash(search);
+      for (let i = 0; i < count; i++) {
+        const w = 900;
+        const h = i === 0 ? 1125 : 1000;
+        const resolved = resolveImage(results, p.name, w, h, `${seed}-${i}`);
+        const publicUrl = resolved.startsWith('data:') ? resolved : await uploadImage(resolved, `products/${p.slug}/${i}.jpg`);
+        images.push(publicUrl);
+        process.stdout.write('.');
+      }
     }
 
     const { sourceImages, category, ...rest } = p;
@@ -102,10 +123,11 @@ async function seedStores() {
 
 async function seedJournal() {
   console.log(`Seeding ${JOURNAL_ARTICLES.length} journal articles...`);
-  const withCovers = JOURNAL_ARTICLES.map((a, i) => ({
-    ...a,
-    cover_image: `https://picsum.photos/seed/jd-journal-${a.slug}/1200/900`,
-  }));
+  const withCovers = [];
+  for (const a of JOURNAL_ARTICLES) {
+    const results = await searchUnsplash(a.title);
+    withCovers.push({ ...a, cover_image: resolveImage(results, a.title, 1200, 900, `jd-journal-${a.slug}`) });
+  }
   const { error } = await supabase.from('journal_articles').upsert(withCovers, { onConflict: 'slug' });
   if (error) throw error;
 }
@@ -120,6 +142,7 @@ async function seedCollection(categoryIdBySlug) {
 
   let collectionId = existing?.id;
   if (!collectionId) {
+    const heroResults = await searchUnsplash('autumn wool fashion collection');
     const { data, error } = await supabase
       .from('collections')
       .insert({
@@ -127,7 +150,7 @@ async function seedCollection(categoryIdBySlug) {
         name: 'Autumn Collection',
         description: 'Wool flannel, raw silk and cashmere — a season built around three cloths.',
         season: 'Autumn',
-        hero_image: 'https://picsum.photos/seed/jd-autumn-hero/1600/900',
+        hero_image: resolveImage(heroResults, 'Autumn Collection', 1600, 900, 'jd-autumn-hero'),
       })
       .select()
       .single();

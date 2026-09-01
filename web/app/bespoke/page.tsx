@@ -10,42 +10,42 @@ const JOURNEY = [
     title: 'Consultation',
     body: 'Ninety minutes with a cutter. We discuss occasion, cloth and how you want the garment to sit. No measurements yet.',
     meta: '90 minutes · showroom or at your address',
-    seed: 'jd-journey-consult',
+    image: '/assets/placeholders/journey-consult.jpg',
   },
   {
     n: '02',
     title: 'Measurement',
     body: 'Some thirty measurements, plus posture notes a tape cannot record. Your paper pattern is cut from these alone.',
     meta: '45 minutes',
-    seed: 'jd-journey-measure',
+    image: '/assets/placeholders/journey-measure.jpg',
   },
   {
     n: '03',
     title: 'Fabric Selection',
     body: 'Mills from Biella, Huddersfield and Kyoto. We show what suits the garment, the season and the way you wear it.',
     meta: 'Over 400 cloths in the book',
-    seed: 'jd-journey-fabric',
+    image: '/assets/placeholders/journey-fabric.jpg',
   },
   {
     n: '04',
     title: 'Fittings',
     body: 'Three fittings across the make. The first is basted canvas and looks unfinished — that is the point.',
     meta: 'Weeks 4, 8 and 11',
-    seed: 'jd-journey-fitting',
+    image: '/assets/placeholders/journey-fitting.jpg',
   },
   {
     n: '05',
     title: 'Delivery',
     body: 'Pressed, boxed and handed over in the showroom. Alterations for the life of the garment are included.',
     meta: 'Week 12',
-    seed: 'jd-journey-delivery',
+    image: '/assets/placeholders/journey-delivery.jpg',
   },
 ];
 
 const TAILORS = [
-  { name: 'Elena Marchetti', role: 'Head Cutter', bio: 'Trained in Naples, cutting for twenty-two years. Known for a shoulder line no one else in the house attempts.', seed: 'jd-tailor-1' },
-  { name: 'Thomas Ridley', role: 'Coatmaker', bio: 'Fourteen years on overcoats and outerwear alone. Can identify a mill by touch.', seed: 'jd-tailor-2' },
-  { name: 'Sofia Adeyemi', role: 'Trouser Tailor', bio: 'Joined as an apprentice, now runs the trouser bench. Precise to a sixteenth of an inch.', seed: 'jd-tailor-3' },
+  { name: 'Elena Marchetti', role: 'Head Cutter', bio: 'Trained in Naples, cutting for twenty-two years. Known for a shoulder line no one else in the house attempts.', image: '/assets/placeholders/tailor-1.jpg' },
+  { name: 'Thomas Ridley', role: 'Coatmaker', bio: 'Fourteen years on overcoats and outerwear alone. Can identify a mill by touch.', image: '/assets/placeholders/tailor-2.jpg' },
+  { name: 'Sofia Adeyemi', role: 'Trouser Tailor', bio: 'Joined as an apprentice, now runs the trouser bench. Precise to a sixteenth of an inch.', image: '/assets/placeholders/tailor-3.jpg' },
 ];
 
 export default function BespokePage() {
@@ -86,7 +86,7 @@ export default function BespokePage() {
                 <div className="text-[11px] uppercase tracking-label text-ink-600">{step.meta}</div>
               </div>
               <div className="relative aspect-[4/3] border border-divider overflow-hidden hidden md:block">
-                <Image src={`https://picsum.photos/seed/${step.seed}/800/600`} alt={step.title} fill sizes="30vw" className="object-cover" />
+                <Image src={step.image} alt={step.title} fill sizes="30vw" className="object-cover" />
               </div>
             </div>
           ))}
@@ -99,7 +99,7 @@ export default function BespokePage() {
           {TAILORS.map((t) => (
             <div key={t.name} className="flex flex-col gap-5">
               <div className="relative aspect-[4/5] border border-divider overflow-hidden">
-                <Image src={`https://picsum.photos/seed/${t.seed}/700/875`} alt={t.name} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                <Image src={t.image} alt={t.name} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
               </div>
               <div className="font-display text-2xl">{t.name}</div>
               <div className="text-[11px] uppercase tracking-label text-gold-700">{t.role}</div>

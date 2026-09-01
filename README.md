@@ -18,7 +18,7 @@ rounds of revision in `chats/chat1.md` and is the authoritative source. All toke
 `web/tailwind.config.js` are taken from that file's final `<style>` block.
 
 Two scope decisions were made explicitly for this build:
-- **Product/editorial imagery** is sourced from picsum.photos (a free placeholder photo
+- **Product/editorial imagery** is sourced from loremflickr.com (a free placeholder photo
   service) and re-uploaded into your own Supabase Storage bucket by `server/scripts/seed.js`
   — swap in real photography by re-running the seed with different source URLs, or by
   uploading directly to the `product-images` bucket and updating `products.images`.

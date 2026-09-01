@@ -1,5 +1,5 @@
-export function formatPrice(cents: number, currency = 'USD') {
-  return new Intl.NumberFormat('en-US', {
+export function formatPrice(cents: number, currency = 'NGN') {
+  return new Intl.NumberFormat('en-NG', {
     style: 'currency',
     currency,
     maximumFractionDigits: 0,

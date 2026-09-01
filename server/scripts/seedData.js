@@ -1,10 +1,27 @@
 // Realistic placeholder catalog data for JaneDeraa.
-// Image URLs point at picsum.photos (free placeholder photo service) — the
-// seed script downloads each one and re-uploads it into Supabase Storage, so
-// the product rows end up pointing at your own bucket, not a third party.
-// Swap these for real product photography whenever it's ready.
+// Products without real photography (see the `images:` overrides below, and
+// scripts/product-photos/) get their photos from the Unsplash API at seed
+// time — real, licensed stock photography searched by product name, picked
+// deterministically per product/image slot and cached into Supabase Storage.
+// If no Unsplash key is configured (or a search comes up empty), the seed
+// script falls back to a generated placeholder swatch — see placeholderSvg
+// in seed.js. Swap either for real product photography whenever it's ready.
+//
+// This used to pull random photos from picsum.photos, then loremflickr.com
+// after picsum's image host was blocked on some networks. Both were dropped:
+// loremflickr in particular pulls from Flickr's full public pool with no
+// relevance or content guarantee, and surfaced images that had no business
+// on this site.
 
-const picsum = (seed, w, h) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
+// Deterministic index from a string seed, so the same slug always gets the
+// same placeholder tint / photo pick.
+function seedToLock(seed) {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
 
 const CATEGORIES = [
   { slug: 'women-coats', name: 'Coats', gender: 'women', description: 'Outerwear cut from wool, cashmere and cotton gabardine.' },
@@ -59,7 +76,7 @@ function product({
   tags = [],
   featured = false,
   imageCount = 3,
-  images, // optional: explicit list of http(s) URLs or local paths (see uploadImage in seed.js), overrides the picsum auto-generation
+  images, // optional: explicit list of http(s) URLs or local paths (see uploadImage in seed.js), overrides the Unsplash/placeholder auto-generation
 }) {
   return {
     slug,
@@ -68,7 +85,7 @@ function product({
     gender,
     tier,
     price_cents: Math.round(price * 100),
-    currency: 'USD',
+    currency: 'NGN',
     short_description: short,
     description,
     fabric,
@@ -78,8 +95,10 @@ function product({
     tags,
     is_featured: featured,
     in_stock: true,
-    sourceImages:
-      images || Array.from({ length: imageCount }, (_, i) => picsum(`jd-${slug}-${i}`, 900, i === 0 ? 1125 : 1000)),
+    // Either an explicit list of sources (see uploadImage in seed.js), or a
+    // search marker resolved at seed time — one Unsplash search per product,
+    // reused across its image slots (see seedProducts in seed.js).
+    sourceImages: images || { search: name, count: imageCount, seed: `jd-${slug}` },
   };
 }
 
@@ -89,7 +108,7 @@ const PRODUCTS = [
     slug: 'wool-flannel-overcoat',
     name: 'Wool Flannel Overcoat',
     category: 'women-coats',
-    gender: 'women',
+    gender: 'unisex',
     tier: 'ready-to-wear',
     price: 1890,
     short: 'A single-breasted overcoat cut from heavyweight Italian flannel.',
@@ -101,6 +120,11 @@ const PRODUCTS = [
     colors: COLOR_SETS.neutral,
     tags: ['New'],
     featured: true,
+    images: [
+      'product-photos/wool-flannel-overcoat-1.jpg',
+      'product-photos/wool-flannel-overcoat-2.jpg',
+      'product-photos/wool-flannel-overcoat-3.jpg',
+    ],
   }),
   product({
     slug: 'cashmere-wrap-coat',
@@ -117,6 +141,11 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: COLOR_SETS.warm,
     tags: ['Limited'],
+    images: [
+      'product-photos/cashmere-wrap-coat-1.jpg',
+      'product-photos/cashmere-wrap-coat-2.jpg',
+      'product-photos/cashmere-wrap-coat-3.jpg',
+    ],
   }),
   product({
     slug: 'silk-charmeuse-blouse',
@@ -133,12 +162,13 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: COLOR_SETS.neutral,
     tags: [],
+    images: ['product-photos/silk-charmeuse-blouse-1.jpg'],
   }),
   product({
     slug: 'tailored-wool-trouser-women',
     name: 'Tailored Wool Trouser',
     category: 'women-tailoring',
-    gender: 'women',
+    gender: 'unisex',
     tier: 'ready-to-wear',
     price: 560,
     short: 'A high-rise trouser cut from Super 120s wool.',
@@ -149,12 +179,17 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: COLOR_SETS.evening,
     tags: [],
+    images: [
+      'product-photos/tailored-wool-trouser-women-1.jpg',
+      'product-photos/tailored-wool-trouser-women-2.jpg',
+      'product-photos/tailored-wool-trouser-women-3.jpg',
+    ],
   }),
   product({
     slug: 'merino-crewneck-sweater',
     name: 'Merino Crewneck Sweater',
     category: 'women-knitwear',
-    gender: 'women',
+    gender: 'unisex',
     tier: 'ready-to-wear',
     price: 340,
     short: 'A fully-fashioned crewneck in extra-fine merino.',
@@ -166,6 +201,7 @@ const PRODUCTS = [
     colors: COLOR_SETS.neutral,
     tags: ['New'],
     featured: true,
+    images: ['product-photos/merino-crewneck-sweater-1.jpg', 'product-photos/merino-crewneck-sweater-2.jpg'],
   }),
   product({
     slug: 'raw-silk-slip-dress',
@@ -182,6 +218,11 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: COLOR_SETS.warm,
     tags: [],
+    images: [
+      'product-photos/raw-silk-slip-dress-1.jpg',
+      'product-photos/raw-silk-slip-dress-2.jpg',
+      'product-photos/raw-silk-slip-dress-3.jpg',
+    ],
   }),
   product({
     slug: 'double-breasted-blazer-women',
@@ -214,6 +255,7 @@ const PRODUCTS = [
     sizes: RTW_SIZES,
     colors: [{ name: 'Black', hex: '#111110' }],
     tags: ['New'],
+    featured: true,
     imageCount: 1,
     images: ['product-photos/mesh-sleeve-slit-gown-1.jpg'],
   }),
@@ -250,6 +292,7 @@ const PRODUCTS = [
     sizes: MADE_TO_MEASURE,
     colors: [{ name: 'Blush', hex: '#E3B7A0' }],
     tags: ['Bespoke'],
+    featured: true,
     imageCount: 1,
     images: ['product-photos/beaded-lace-offshoulder-gown-1.jpg'],
   }),
@@ -427,7 +470,6 @@ const PRODUCTS = [
     sizes: MADE_TO_MEASURE,
     colors: COLOR_SETS.evening,
     tags: [],
-    featured: true,
     imageCount: 2,
   }),
   product({
@@ -481,8 +523,11 @@ const PRODUCTS = [
     sizes: MADE_TO_MEASURE,
     colors: COLOR_SETS.evening,
     tags: ['Bespoke'],
-    featured: true,
-    imageCount: 2,
+    images: [
+      'product-photos/bespoke-two-piece-suit-1.jpg',
+      'product-photos/bespoke-two-piece-suit-2.jpg',
+      'product-photos/bespoke-two-piece-suit-3.jpg',
+    ],
   }),
   product({
     slug: 'bespoke-overcoat',
@@ -499,7 +544,7 @@ const PRODUCTS = [
     sizes: MADE_TO_MEASURE,
     colors: COLOR_SETS.neutral,
     tags: ['Bespoke'],
-    imageCount: 2,
+    images: ['product-photos/bespoke-overcoat-1.jpg'],
   }),
   product({
     slug: 'bespoke-evening-tuxedo',
@@ -516,7 +561,7 @@ const PRODUCTS = [
     sizes: MADE_TO_MEASURE,
     colors: COLOR_SETS.evening,
     tags: ['Bespoke', 'Limited'],
-    imageCount: 2,
+    images: ['product-photos/bespoke-evening-tuxedo-1.jpg', 'product-photos/bespoke-evening-tuxedo-2.jpg'],
   }),
   product({
     slug: 'beaded-lace-bridal-gown',
@@ -621,4 +666,5 @@ module.exports = {
   PRODUCTS,
   STORES,
   JOURNAL_ARTICLES,
+  seedToLock,
 };
